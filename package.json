@@ -1,0 +1,25 @@
+{
+  "name": "web-scraping-as-a-service",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js"
+  },
+  "engines" : { "node" : "6.9.5" },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/bdavidxyz/web-scraping-as-a-service"
+  },
+  "author": "",
+  "license": "MIT",
+  "homepage": "https://github.com/bdavidxyz/web-scraping-as-a-service",
+  "dependencies": {
+    "body-parser": "1.17.2",
+    "electron": "1.6.10",
+    "express": "4.13.3",
+    "lodash": "4.17.4",
+    "nightmare": "2.10.0",
+    "node-persist": "2.1.0"
+  }
+}

@@ -1,0 +1,4 @@
+node_modules/
+my_storage/
+*.log
+.DS_Store
