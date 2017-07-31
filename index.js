@@ -14,33 +14,12 @@ let app = express();
 app.set('port', (process.env.PORT || 5000));
 app.use(bodyParser());
 
-// Add headers
+// Create a big security loophole
 app.use(function (req, res, next) {
   res.setHeader('Access-Control-Allow-Origin', '*');
   next();
 });
 
-app.get('/all-questions', function (request, response, next) {
-  response.send(_.zipObject(storage.keys(), storage.values()));
-  next();
-});
-
-app.get('/get-answer-for', function (request, response, next) {
-  
-  console.log('Requested an answer\n==========');
-
-  if (request.query.q) {
-    const q = request.query.q;
-    console.log('q is ' + q);
-    const final_answer = storage.getItemSync(q);
-    console.log('final_answer is ' + final_answer);
-    response.status(200).send(final_answer)
-    next();
-  } else {
-    response.status(200).send('please send a q param')
-    next();
-  }
-});
 
 app.post('/ask', function (request, response, next) {
   console.log('Request to ask a question\n==========');
@@ -50,8 +29,9 @@ app.post('/ask', function (request, response, next) {
 
   const question = request.body.question;
 
-  if (request.body.question) {
+  if (question) {
 
+    // !!! Don't forget the instantiation of nightmare on EVERY request
     const nightmare = new Nightmare({ show: false })
     nightmare
       .goto(URL)
@@ -93,6 +73,29 @@ app.post('/ask', function (request, response, next) {
     next();
   }
   
+});
+
+
+app.get('/all-questions', function (request, response, next) {
+  response.send(_.zipObject(storage.keys(), storage.values()));
+  next();
+});
+
+app.get('/get-answer-for', function (request, response, next) {
+  
+  console.log('Requested an answer\n==========');
+
+  if (request.query.q) {
+    const q = request.query.q;
+    console.log('q is ' + q);
+    const final_answer = storage.getItemSync(q);
+    console.log('final_answer is ' + final_answer);
+    response.status(200).send(final_answer)
+    next();
+  } else {
+    response.status(200).send('please send a q param')
+    next();
+  }
 });
 
 
