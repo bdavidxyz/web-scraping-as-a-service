@@ -14,7 +14,7 @@ let app = express();
 app.set('port', (process.env.PORT || 5000));
 app.use(bodyParser());
 
-// Create a big security loophole
+// Handy for local dev and debugging
 app.use(function (req, res, next) {
   res.setHeader('Access-Control-Allow-Origin', '*');
   next();
@@ -24,7 +24,7 @@ app.use(function (req, res, next) {
 app.post('/ask', function (request, response, next) {
   console.log('Request to ask a question\n==========');
 
-  // immediately reply ok, then do the job
+  // Immediately reply ok, then do the job
   response.status(200).send('OK');
 
   const question = request.body.question;
@@ -38,10 +38,9 @@ app.post('/ask', function (request, response, next) {
       .wait('#the_input')
       .type('#the_input', question)
       .click('#the_button')
-      // the dude can wait a few seconds to print answer...
+      // The dude can take a few seconds to answer...
       .wait('.actual_result') 
       .evaluate(() => $('.actual-result').text().trim())
-      // result of 
       .then((result) => {
         if (result === 'error' ) {
           // !!! Don't forget "return" keyword if you reuse nightmare in a promise
