@@ -35,30 +35,24 @@ app.post('/ask', function (request, response, next) {
     const nightmare = new Nightmare({ show: false })
     nightmare
       .goto(URL)
-      .wait('#the_input')
-      .type('#the_input', question)
-      .click('#the_button')
+      .wait('#ask-input')
+      .type('#ask-input', question)
+      .click('#ask-button')
       // The dude can take a few seconds to answer...
-      .wait('.actual_result') 
+      .wait('.actual-result') 
       .evaluate(() => $('.actual-result').text().trim())
       .then((result) => {
         if (result === 'error' ) {
           // !!! Don't forget "return" keyword if you reuse nightmare in a promise
           return nightmare
-            .wait('input#random-thought')
-            .click('input#random-thought')
-            .evaluate(() => $('p.random_thought'))
+            .wait('#button-quote')
+            .click('#button-quote')
+            .evaluate(() => $('#quote-text').text().trim())
             .then((random_thought) => {
               storage.setItemSync(question, random_thought); 
             })
         } else {
-          // !!! Don't forget "return" keyword if you reuse nightmare in a promise
-          return nightmare
-            .wait('.actual-result span')
-            .evaluate(() => $('.actual-result span').text().trim())
-            .then((actual_result) => {
-              storage.setItemSync(question, actual_result); 
-            });
+          storage.setItemSync(question, result); 
         }
       })
       .then(() => {
