@@ -20,6 +20,9 @@ app.use(function (req, res, next) {
   next();
 });
 
+app.get('/', function (request, response, next) {
+  response.status(200).send('<div>Welcome !</div><div>- Use a POST request on /ask to ask something to the dude</div><div>- Use a GET request on /get-answer-for?q= to read the answer (q is the question you asked)</div><div>- Use a GET request on /all-questions to display all Q&A</div>');
+});
 
 app.post('/ask', function (request, response, next) {
   console.log('Request to ask a question\n==========');
