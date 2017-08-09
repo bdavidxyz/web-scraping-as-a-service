@@ -3,7 +3,7 @@ const bodyParser = require('body-parser');
 const storage = require('node-persist');
 const _ = require('lodash');
 
-const URL = 'http://ask-the-dude.bitballoon.com/';
+const URL = 'https://bdavidxyz.github.io/ask-the-dude/';
 console.log('Welcome to Nightmare scrape\n==========');
 
 storage.initSync({dir:'./my_storage'});
