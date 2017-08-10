@@ -71,7 +71,6 @@ app.post('/ask', function (request, response, next) {
   
 });
 
-
 app.get('/all-questions', function (request, response, next) {
   response.send(_.zipObject(storage.keys(), storage.values()));
   next();
@@ -84,7 +83,7 @@ app.get('/get-answer-for', function (request, response, next) {
   if (request.query.q) {
     const q = request.query.q;
     console.log('q is ' + q);
-    const final_answer = storage.getItemSync(q);
+    const final_answer = _.defaultTo(storage.getItemSync(q), "I don't know");
     console.log('final_answer is ' + final_answer);
     response.status(200).send(final_answer)
     next();
